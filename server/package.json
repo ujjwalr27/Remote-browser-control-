@@ -1,0 +1,16 @@
+{
+  "name": "bld-remote-browser-server",
+  "version": "1.0.0",
+  "description": "Backend that orchestrates a headless Chromium Docker container and bridges CDP screencast/input over WebSocket.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "dockerode": "^4.0.2",
+    "playwright-core": "^1.44.0",
+    "ws": "^8.17.0"
+  }
+}
