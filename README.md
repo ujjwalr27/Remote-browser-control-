@@ -1,4 +1,4 @@
-# BLD — Remote Browser Control (mini "TeamViewer for a browser")
+# Remote Browser Control (mini "TeamViewer for a browser")
 
 Open a web UI, hit **Start Browser**, and a Docker container spins up running
 **headless Chromium**. Its screen streams back to the UI in real time over a
