@@ -1,0 +1,41 @@
+# One-command stack: backend + frontend.
+#
+# The `server` mounts the host Docker socket so it can spawn the headless
+# Chromium container at runtime, attaching it to `bld-net` and reaching it by
+# container IP on port 9222.
+#
+# Prerequisite: build the Chromium image once so the server can run it:
+#   docker build -t bld-chromium docker/
+#
+# Then:
+#   docker compose up --build
+#   open http://localhost:3000
+
+services:
+  server:
+    build: ./server
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - CHROMIUM_IMAGE=bld-chromium
+      - DOCKER_NETWORK=bld-net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - bld-net
+
+  web:
+    build: ./web
+    # Bind Next.js to 0.0.0.0 so the host can reach it through the port mapping.
+    command: npm run dev -- -H 0.0.0.0
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    networks:
+      - bld-net
+
+networks:
+  bld-net:
+    name: bld-net
